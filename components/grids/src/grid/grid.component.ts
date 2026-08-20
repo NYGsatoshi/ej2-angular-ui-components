@@ -364,11 +364,29 @@ export class GridComponent extends Grid implements IComponentBase {
     }
 
     public ngAfterContentChecked(): void {
+        let refreshColumnHeader: boolean = false;
+        const columnDirectives: any = this.childColumns as any;
+        const gridColumns: any = this.columns as any;
+        if (columnDirectives && columnDirectives.list && gridColumns) {
+            for (let i: number = 0; i < columnDirectives.list.length; i++) {
+                const directiveColumn: any = columnDirectives.list[parseInt(i.toString(), 10)];
+                const gridColumn: any = gridColumns[parseInt(i.toString(), 10)];
+                if (directiveColumn && directiveColumn.hasChanges && directiveColumn.propCollection &&
+                    Object.prototype.hasOwnProperty.call(directiveColumn.propCollection, 'headerText') && gridColumn &&
+                    gridColumn.headerText !== directiveColumn.propCollection.headerText) {
+                    refreshColumnHeader = true;
+                    break;
+                }
+            }
+        }
         this.tagObjects[0].instance = this.childColumns;
         if (this.childAggregates) {
                     this.tagObjects[1].instance = this.childAggregates as any;
                 }
         this.context.ngAfterContentChecked(this);
+        if (refreshColumnHeader && this.element && this.element.classList.contains('e-grid')) {
+            this.refreshHeader();
+        }
     }
 
     public registerEvents: (eventList: string[]) => void;
