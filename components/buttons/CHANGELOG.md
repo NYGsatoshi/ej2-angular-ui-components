@@ -2,15 +2,7 @@
 
 ## [Unreleased]
 
-## 34.2.6 (2026-09-01)
-
-### Switch
-
-#### Bug Fixes
-
-- `#I843865` - The issue with "Toggle Switch persistence should use stable input ID instead of wrapper ID" has been resolved.
-
-## 34.1.29 (2026-07-06)
+## 35.1.37 (2026-09-29)
 
 ### Chip
 
